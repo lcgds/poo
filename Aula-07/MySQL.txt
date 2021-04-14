@@ -1,0 +1,55 @@
+Item
+    +---------------+-----------------+------+-----+---------+----------------+
+    | Field         | Type            | Null | Key | Default | Extra          |
+    +---------------+-----------------+------+-----+---------+----------------+
+    | id            | bigint unsigned | NO   | PRI | NULL    | auto_increment |
+    | nome          | char(255)       | NO   |     | NULL    |                |
+    | preco         | double(6,2)     | YES  |     | NULL    |                |
+    | id_fabricante | bigint unsigned | YES  | MUL | NULL    |                |
+    +---------------+-----------------+------+-----+---------+----------------+
+
+Armazem
+    +-------+-----------------+------+-----+---------+----------------+
+    | Field | Type            | Null | Key | Default | Extra          |
+    +-------+-----------------+------+-----+---------+----------------+
+    | id    | bigint unsigned | NO   | PRI | NULL    | auto_increment |
+    | nome  | char(255)       | NO   |     | NULL    |                |
+    +-------+-----------------+------+-----+---------+----------------+
+
+Item_Armazem
+    +-------+-----------------+------+-----+---------+----------------+
+    | Field | Type            | Null | Key | Default | Extra          |
+    +-------+-----------------+------+-----+---------+----------------+
+    | id    | bigint unsigned | NO   | PRI | NULL    | auto_increment |
+    | nome  | char(255)       | NO   |     | NULL    |                |
+    +-------+-----------------+------+-----+---------+----------------+
+
+Movimentacao
+    +----------------------+--------------------------+------+-----+---------+-------+
+    | Field                | Type                     | Null | Key | Default | Extra |
+    +----------------------+--------------------------+------+-----+---------+-------+
+    | id_item              | bigint unsigned          | NO   | MUL | NULL    |       |
+    | id_armazem           | bigint unsigned          | NO   | MUL | NULL    |       |
+    | id_usuario           | bigint unsigned          | NO   | PRI | NULL    |       |
+    | tipo_de_movimentacao | enum('entrada','saída')  | YES  |     | NULL    |       |
+    | quantidade           | bigint unsigned          | NO   |     | NULL    |       |
+    | data_movimentacao    | date                     | NO   | PRI | NULL    |       |
+    +----------------------+--------------------------+------+-----+---------+-------+
+
+Usuario
+    +-------+-----------------+------+-----+---------+----------------+
+    | Field | Type            | Null | Key | Default | Extra          |
+    +-------+-----------------+------+-----+---------+----------------+
+    | id    | bigint unsigned | NO   | PRI | NULL    | auto_increment |
+    | cpf   | bigint          | YES  |     | NULL    |                |
+    | nome  | char(255)       | NO   |     | NULL    |                |
+    +-------+-----------------+------+-----+---------+----------------+
+
+Fabricante
+    +-------+-----------------+------+-----+---------+----------------+
+    | Field | Type            | Null | Key | Default | Extra          |
+    +-------+-----------------+------+-----+---------+----------------+
+    | id    | bigint unsigned | NO   | PRI | NULL    | auto_increment |
+    | cnpj  | bigint          | YES  |     | NULL    |                |
+    | nome  | char(255)       | NO   |     | NULL    |                |
+    +-------+-----------------+------+-----+---------+----------------+
