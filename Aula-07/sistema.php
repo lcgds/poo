@@ -9,59 +9,104 @@ require('classes/Usuario.class.php');
 class Main
 {
 
+    private $objArmazem;
+    private $objFabricante;
+    private $objItem;
+    private $objMovimentacao;
+    private $objUsuario;
+
     public function __construct()
     {
         echo "\n ----- Início do Programa ----- \n";
 
-        $objArmazem = new Armazem;
-        $objFabricante = new Fabricante;
-        $objItem = new Item;
-        $objMovimentacao = new Movimentacao;
-        $objUsuario = new Usuario;
+        $this->objArmazem = new Armazem;
+        $this->objFabricante = new Fabricante;
+        $this->objItem = new Item;
+        $this->objMovimentacao = new Movimentacao;
+        $this->objUsuario = new Usuario;
 
-        switch ($_SERVER['argv'][1]) {
+        $this->verificarSeExisteArg(1);
+
+        $this->executarOperacao($_SERVER['argv'][1]);
+    }
+
+    private function executarOperacao(string $operacao) 
+    {
+        switch ($operacao) {
             case 'gravarUsuario':
-                $this->gravarUsuario($objUsuario);
+                $this->gravarUsuario();
                 break;
             case 'editarUsuario':
-                $this->editarUsuario($objUsuario);
+                $this->editarUsuario();
+                break;
+            case 'listarUsuario':
+                $this->listarUsuario();
+                break;
+            case 'apagarUsuario':
+                $this->apagarUsuario();
                 break;
             default:
-                echo "\n ERRO: A funcionalidade '{$_SERVER['argv'][1]}' não existe.\n";
+                echo "\n ERRO: A funcionalidade '{$obj}' não existe.\n";
                 break;
         }
     }
 
-    public function gravarUsuario($objUsuario): void 
+    private function gravarUsuario(): void 
     {
         echo "\n ----- Função gravarUsuario() ----- \n";
 
         $dados = $this->tratarDados();
 
-        $objUsuario->set($dados);
+        $this->objUsuario->set($dados);
 
-        if ($objUsuario->save($dados))
+        if ($this->objUsuario->save($dados))
         {
             echo "\n Usuário criado com sucesso. \n";
         };
     }
 
-    public function editarUsuario($objUsuario): void 
+    private function listarUsuario() 
+    {
+        $lista = $this->objUsuario->getAll();
+        
+        echo "ID\tCPF\tNOME\n";
+
+        foreach ($lista as $usuario) {
+            echo "{$usuario['id']}\t{$usuario['cpf']}\t{$usuario['nome']}\n";
+        }
+    }
+
+    private function editarUsuario(): void 
     {
         echo "\n ----- Função gravarUsuario() ----- \n";
 
         $dados = $this->tratarDados();        
 
-        $objUsuario->set($dados);
+        $this->objUsuario->set($dados);
 
-        if ($objUsuario->save($dados))
+        if ($this->objUsuario->save($dados))
         {
             echo "\n Usuário editado com sucesso. \n";
         };
     }
 
-    public function tratarDados() 
+    private function apagarUsuario() 
     {
+        $dados = $this->tratarDados();
+
+        $this->objUsuario->set($dados); 
+        
+        if ($this->objUsuario->delete()) {
+            echo "\n Usuário apagado com sucesso. \n";
+        } else {
+            echo "\n Erro ao tentar apagar o usuário. \n";
+        }
+    }
+
+    private function tratarDados() 
+    {
+        $this->verificarSeExisteArg(2);
+
         $args = explode(',', $_SERVER['argv'][2]);
 
         foreach ($args as $indice => $valor) {
@@ -71,6 +116,15 @@ class Main
         }
 
         return $dados;
+    }
+
+    private function verificarSeExisteArg(int $arg) 
+    {
+        if (!isset($_SERVER['argv'][$arg])) {
+            echo "\n\nErro: para utilizar o programa digite: php sistema.php [operacao] [dados=valor,dado2=valor2,dadoN=valorN]\n\n\n";
+
+            exit();
+        }
     }
 
     public function __destruct()
