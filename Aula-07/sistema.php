@@ -43,7 +43,7 @@ class Main
                 $this->listarUsuario();
                 break;
             case 'apagarUsuario':
-                $this->apagarUsuario();
+                $this->apagarUsuario ();
                 break;
             default:
                 echo "\n ERRO: A funcionalidade '{$obj}' não existe.\n";
