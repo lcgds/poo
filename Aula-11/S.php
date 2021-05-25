@@ -1,6 +1,8 @@
 <?php
 
+
 //Single-Reponsability
+
 
 //EXEMPLO 1
 
@@ -30,6 +32,7 @@ class User {
 
 // Como refatorar, levando em consideração o princípio de Single-Responsability
 
+
 class User {
     private $name;
 
@@ -58,6 +61,7 @@ class Report {
     }
 }
 
+
 // EXEMPLO 2
 
 class Report {
@@ -77,7 +81,9 @@ class Report {
     }
 }
 
+
 // Como refatorar, levando em consideração o princípio de Single-Responsability
+
 
 class Report {
     private $data;
@@ -105,6 +111,7 @@ class ExportAsCSV extends ExportData {
     }
 }
 
+
 //EXEMPLO 3
 
 class Post {
@@ -125,6 +132,7 @@ class Post {
         // Errado
     }
 }
+
 
 // Como refatorar, levando em consideração o princípio de Single-Responsability
 
